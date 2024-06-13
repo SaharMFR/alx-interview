@@ -13,12 +13,13 @@ def minOperations(n):
     if n <= 1:
         return 0
 
-    minOp = [float('inf')] * (n + 1)
-    minOp[1] = 0
+    operations = 0
+    factor = 2
 
-    for i in range(2, n + 1):
-        for j in range(1, i):
-            if i % j == 0:
-                minOp[i] = min(minOp[i], minOp[j] + (i // j))
+    while n > 1:
+        while n % factor == 0:
+            operations += factor
+            n /= factor
+        factor += 1
 
-    return minOp[n]
+    return operations
