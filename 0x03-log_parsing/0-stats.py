@@ -5,11 +5,11 @@ import re
 
 
 standard = re.compile(
-    r"(?P<ip>\d{1,3}(?:\.\d{1,3}){3}) - "
-    r"\[(?P<date>[^\]]+)\] "
-    r"\"GET /projects/260 HTTP/1\.1\" "
-    r"(?P<status>\d{3}) "
-    r"(?P<size>\d+)"
+    r'(?P<ip>\d{1,3}(?:\.\d{1,3}){3}) - '
+    r'\[(?P<date>[^\]]+)\] '
+    r'"GET /projects/260 HTTP/1\.1" '
+    r'(?P<status>\d{3}) '
+    r'(?P<size>\d+)'
 )
 
 fileSize = 0
