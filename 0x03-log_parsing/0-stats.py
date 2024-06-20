@@ -1,38 +1,39 @@
 #!/usr/bin/python3
-""" Reads `stdin` line by line and computes metrics """
+"""
+Log parsing
+"""
+
 import sys
 
+if __name__ == '__main__':
 
-fileSize = 0
-statusCount = {
-    "200": 0,
-    "301": 0,
-    "400": 0,
-    "401": 0,
-    "403": 0,
-    "404": 0,
-    "405": 0,
-    "500": 0
-}
+    fileSize, counter = 0, 0
+    codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
+    statusCount = {k: 0 for k in codes}
 
+    def print_statistics(statusCount: dict, file_size: int) -> None:
+        print("File size:", fileSize)
+        for k, v in sorted(statusCount.items()):
+            if v != 0:
+                print("{}: {}".format(k, v))
 
-def print_statistics():
-    print("File size:", fileSize)
-    for k, v in statusCount.items():
-        if v != 0:
-            print("{}: {}".format(k, v))
-
-
-try:
-    counter = 0
-    for line in sys.stdin:
-        if counter == 10:
-            print_statistics()
-            counter = 0
-        data = line.split()
-        fileSize += int(data[-1])
-        statusCount[data[-2]] += 1
-        counter += 1
-except KeyboardInterrupt:
-    print_statistics()
-    raise
+    try:
+        for line in sys.stdin:
+            counter += 1
+            data = line.split()
+            try:
+                status_code = data[-2]
+                if status_code in statusCount:
+                    statusCount[status_code] += 1
+            except BaseException:
+                pass
+            try:
+                fileSize += int(data[-1])
+            except BaseException:
+                pass
+            if counter % 10 == 0:
+                print_statistics(statusCount, fileSize)
+        print_statistics(statusCount, fileSize)
+    except KeyboardInterrupt:
+        print_statistics(statusCount, fileSize)
+        raise
