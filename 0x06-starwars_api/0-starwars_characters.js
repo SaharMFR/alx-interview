@@ -6,7 +6,7 @@ async function starWarsCharacters () {
   const response = await (await request(url)).body;
   const chars = JSON.parse(response).characters;
   for (let i = 0; i < chars.length; i++) {
-    let character = await (await request(chars[i])).body;
+    const character = await (await request(chars[i])).body;
     console.log(JSON.parse(character).name);
   }
 }
