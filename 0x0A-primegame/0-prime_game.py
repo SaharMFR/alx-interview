@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Defines `isWinner` and `isPrime` functions """
 
+
 def isPrime(n):
     """ Check whether n is prime """
     if n <= 1:
